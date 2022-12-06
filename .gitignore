@@ -1,3 +1,4 @@
 setting.py
 *.log
 .idea/
+__pycache__
