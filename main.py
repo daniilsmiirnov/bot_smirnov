@@ -1,16 +1,30 @@
- # This is a sample Python script.
+from aiogram import Bot, Dispatcher, executor, types
+from setting import *
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+token: str = token_bot
+
+# Создаем объекты бота и диспетчера
+bot = Bot(token)
+dp = Dispatcher(bot)
 
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+# Этот хэндлер будет срабатывать на команду "/start"
+@dp.message_handler(commands=['start'])
+async def process_start_command(message: types.Message):
+    await message.answer('Привет!\nМеня зовут Эхо-бот!\nНапиши мне что-нибудь')
 
 
-# Press the green button in the gutter to run the script.
+# Этот хэндлер будет срабатывать на команду "/help"
+@dp.message_handler(commands=['help'])
+async def process_help_command(message: types.Message):
+    await message.answer('Напиши мне что-нибудь и в ответ я пришлю тебе твое сообщение')
+
+
+# Этот хэндлер будет срабатывать на любые ваши текстовые сообщения, кроме команд "/start" и "/help"
+@dp.message_handler()
+async def send_echo(message: types.Message):
+    await message.answer(message.text)
+
+
 if __name__ == '__main__':
-    print_hi('PyCharm')
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+    executor.start_polling(dp, skip_updates=True)
