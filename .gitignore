@@ -1,4 +1,5 @@
 setting.py
 *.log
 .idea/
-__pycache__
+testrequest.py
+dogtest.py
