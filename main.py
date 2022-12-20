@@ -1,5 +1,6 @@
 from aiogram import Bot, Dispatcher, executor, types
 from setting import *
+import test
 import requests
 from aiogram.types import ReplyKeyboardMarkup, ReplyKeyboardRemove, KeyboardButton
 token: str = token_bot
@@ -8,16 +9,21 @@ api_url_dog= 'https://random.dog/woof.json'
 api_url_fox= 'https://randomfox.ca/floof/'
 bot = Bot(token)
 dp = Dispatcher(bot)
-#chat_id=560682705
-chat_id=442035403
+chat_id=560682705
+id=0
+#chat_id=442035403
 keyboard: ReplyKeyboardMarkup = ReplyKeyboardMarkup(resize_keyboard=True)
 button_cat: KeyboardButton = KeyboardButton('Picture of Fox')
 button_dog: KeyboardButton = KeyboardButton('Picture of Dog')
 button_credits: KeyboardButton = KeyboardButton('Credits')
+
 keyboard.add(button_cat, button_dog,button_credits)
+def return_chat_id():
+    return id
 @dp.message_handler(commands=['start'])
 async def start_command(message: types.Message):
-    await message.answer('Какую картинку хотите получить?', reply_markup=keyboard)
+    id= message.from_user.id
+    await message.answer(f'Какую картинку хотите получить?', reply_markup=keyboard)
 
 @dp.message_handler(commands=['help'])
 async def help_command(message: types.Message):
